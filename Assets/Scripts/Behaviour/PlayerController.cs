@@ -1,10 +1,11 @@
+using System.Collections;
 using UnityEngine;
 
-public class CharacterManager : MonoBehaviour
+public class PlayerController : Character
 {
-    private Transform character;
     [SerializeField] private float speed, bombCD;
     [SerializeField] private GameObject bombPrefab;
+    private Transform character;
     private float bombCDCount;
     private void Awake()
     {
@@ -13,7 +14,9 @@ public class CharacterManager : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        MoveCharacter();
+        if (isStun) return;
+
+        Move();
         Action();
     }
 
@@ -27,7 +30,7 @@ public class CharacterManager : MonoBehaviour
         bombCDCount += Time.fixedDeltaTime;
     }
 
-    private void MoveCharacter()
+    protected override void Move()
     {
         var move = new Vector3(Input.GetAxis("Horizontal") * Time.fixedDeltaTime,
             Input.GetAxis("Vertical") * Time.fixedDeltaTime) * speed;
