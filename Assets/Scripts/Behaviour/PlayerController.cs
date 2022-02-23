@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 
 public class PlayerController : Character
@@ -14,6 +13,8 @@ public class PlayerController : Character
     }
     private void FixedUpdate()
     {
+        bombCDCount += Time.fixedDeltaTime;
+
         if (isStun) return;
 
         Move();
@@ -27,7 +28,6 @@ public class PlayerController : Character
             Instantiate(bombPrefab, gameObject.transform.localPosition, Quaternion.identity);
             bombCDCount = 0;
         }
-        bombCDCount += Time.fixedDeltaTime;
     }
 
     protected override void Move()
